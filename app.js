@@ -12,9 +12,7 @@ app.set('views', __dirname + '/views');
 app.set('view cache', !DEBUG);
 swig.setDefaults({cache: !DEBUG});
 
-if (DEBUG) {
-    app.use('/library', express.static('./library'));
-}
+// app.use('/library', express.static('./library'));
 app.use(function (err, req, res, next) {
     console.log("Error: " + err);
     res.render("index", {title: "Error: " + err, message: err});
@@ -23,8 +21,21 @@ app.use(function (err, req, res, next) {
 app.get('/', function (req, res, next) {
     res.render('index', {title: "Home Page"});
 });
+app.get('/data', function (req, res, next) {
+    res.json({
+        name: 'Some object', 
+        value: "Some other object.",
+        list: [
+            {id: 1},{id: 2},{id: 3},{id: 4}
+        ],
+        obj: {
+            name: "A nested object",
+            somethingElse: 'lkdjsflkjasldkjlkjasdf'
+        }
+    });
+});
 app.get('*', function (req, res, next) {
-    res.render('index', {title: req.path, message: "Page not found but you were looking for: " + req.path});
+    res.render('index', {title: "Page Not Found: " + req.path, message: "Page not found but you were looking for: " + req.path});
 });
 
 var port = process.env.PORT || "8000";
