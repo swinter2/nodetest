@@ -1,30 +1,33 @@
 var express = require('express')
     swig = require('swig'),
-    cons = require('consolidate'),
     app = express();
 
-app.engine('html', cons.swig);
-app.set('view engine', 'html');
-app.set('view cache', false);
-app.set('views', __dirname + '/views');
+// Indicate if site is running in debug mode.
+var DEBUG = true;
 
-app.use('/library', express.static('./library'));
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+// Disable view caching in development.
+app.set('view cache', !DEBUG);
+swig.setDefaults({cache: !DEBUG});
+
+if (DEBUG) {
+    app.use('/library', express.static('./library'));
+}
 app.use(function (err, req, res, next) {
     console.log("Error: " + err);
-    res.send('Server Error.');
+    res.render("index", {title: "Error: " + err, message: err});
 });
 
 app.get('/', function (req, res, next) {
     res.render('index', {title: "Home Page"});
-    // res.send("hi there");
 });
 app.get('*', function (req, res, next) {
     res.render('index', {title: req.path, message: "Page not found but you were looking for: " + req.path});
-    // res.send("Page not found but you were looking for: " + req.path);
 });
 
-
-var port = Number(process.env.PORT || 8000);
-console.log("Listening on http://localhost:" + port);
+var port = process.env.PORT || "8000";
+console.log("Listening on port " + port);
 app.listen(port);
 

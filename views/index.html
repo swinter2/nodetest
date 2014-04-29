@@ -2,30 +2,41 @@
 <html>
 <head>
     <title>{{ title }}</title>
+
+    <link rel="stylesheet" type="text/css" href="/library/stylesheets/print.css" media="print">
+    <link rel="stylesheet" type="text/css" href="/library/stylesheets/screen.css" media="screen,projection">
 </head>
 <body>
-{% if message %}
-{{ message }}
-{% else %}
 
-Here is the text for the default page.
+<div class="wrap">
+    <header>
+        <h1>Google Search Test</h1>
+    </header>
 
-{% endif %}
+    <div class="message">
+        {% if message -%}
+        {{ message }}
+        {%- else -%}
 
-<div id='search'>
-<script>
-  (function() {
-    var cx = '008658705802461367413:lifgp7bcvtm';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//www.google.com/cse/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
-<gcse:search></gcse:search>
+        Here is the text for the default page.
+
+        {%- endif %}
+    </div>
+    <div id='search'>
+        <script>
+          (function() {
+            var cx = '008658705802461367413:lifgp7bcvtm';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                '//www.google.com/cse/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+          })();
+        </script>
+        <gcse:search></gcse:search>
+    </div>
 </div>
 </body>
 </html>

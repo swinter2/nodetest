@@ -4,3 +4,60 @@
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 @import "compass/reset";
+@import "susy";
+@import "breakpoint";
+@import url(http://fonts.googleapis.com/css?family=Lora|Open+Sans);
+
+$base-font: 16px;
+$font: "Open Sans", "Times New Roman", serif;
+
+$mobile-device: 40em;
+
+$lightblue: #efffff;
+$blue: #559999;
+$darkblue: #334444;
+
+$susy: (
+    columns: 12,
+    column-width: 960px / 12,
+    gutters: 1/4
+);
+
+body {
+    font-family: $font;
+    font-size: $base-font;
+    line-height: 1.2em;
+    color: $darkblue;
+    background-color: $lightblue;
+}
+h1, h2, h3, h4 { margin: 0.6em 0; }
+h1 {font-size: 1.8em; line-height: 1em;}
+h2 {font-size: 1.6em; line-height: 1em;}
+h3 {font-size: 1.4em; line-height: 1em;}
+h4 {font-size: 1.2em; line-height: 1em;}
+a {color: $blue}
+
+.wrap {@include container;}
+
+header {
+    @include span(12);
+}
+.message {
+    @include span(12);
+    margin-bottom: 1em;
+
+    @include breakpoint($mobile-device) {
+        @include span(8);
+        margin-bottom: 0;
+    }
+}
+#search {
+    @include span(12);
+    margin-bottom: 1em;
+    
+    @include breakpoint($mobile-device) {
+        @include span(last 4);
+        margin-bottom: 0;
+    }
+}
+
