@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="testApp">
 <head>
     <title>{{ title }}</title>
 
@@ -19,8 +19,11 @@
         {%- else -%}
 
         Here is the text for the default page.
-        <div id="data"></div>
-        <button>Do It</button>
+        <div ng-controller="TestCtrl">
+            <div id="data"></div>
+            <button>Do It</button>
+            <p>[[ message ]]</p>
+        </div>
         {%- endif %}
     </div>
     <div id='search'>
@@ -40,6 +43,20 @@
     </div>
 </div>
 
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script type="text/javascript">
+var testApp = angular.module('testApp', [], function ($interpolateProvider) {
+    $interpolateProvider.startSymbol('[[');
+    $interpolateProvider.endSymbol(']]');
+});
+
+testApp.controller('TestCtrl',
+    function ($scope) {
+        $scope.message = "Wow, this is the message.";
+        $scope.data = null;
+    }
+);
+</script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type="text/javascript">
 jQuery(function ($) {
@@ -47,10 +64,11 @@ jQuery(function ($) {
     function doit() {
         $("#data").html("");
         $.getJSON("/data", {}, function (data) {
-            for (var i in data) {
-                $("#data").append("<p>" + i + "</p>");
-            }
-            $("#data").append("<textarea>" + data + "</textarea>");
+            
+            // for (var i in data) {
+            //     $("#data").append("<p>" + i + "</p>");
+            // }
+            // $("#data").append("<textarea>" + data + "</textarea>");
         });
     }
 

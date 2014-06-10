@@ -21,6 +21,9 @@ app.use(function (err, req, res, next) {
 app.get('/', function (req, res, next) {
     res.render('index', {title: "Home Page"});
 });
+app.get('/search', function (req, res, next) {
+    res.render('search', {title: "Search"});
+});
 app.get('/data', function (req, res, next) {
     res.json({
         name: 'Some object', 
